@@ -91,6 +91,16 @@ public class ThongKeVaBaoCaoPanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblThongKe.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                tblThongKeMouseDragged(evt);
+            }
+        });
+        tblThongKe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblThongKeMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblThongKe);
 
         rbnTheoNgay.setFont(new java.awt.Font("Sitka Heading", 1, 12)); // NOI18N
@@ -262,6 +272,23 @@ public class ThongKeVaBaoCaoPanel extends javax.swing.JPanel {
     private void txtDoanhThuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDoanhThuActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDoanhThuActionPerformed
+
+    private void tblThongKeMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblThongKeMouseDragged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblThongKeMouseDragged
+
+    private void tblThongKeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblThongKeMouseClicked
+        int row = tblThongKe.getSelectedRow();
+        if (row >= 0) {
+            String maHD = tblThongKe.getValueAt(row, 0).toString();
+            String ngayTao = tblThongKe.getValueAt(row, 1).toString();
+            String tenKH = tblThongKe.getValueAt(row, 2).toString();
+            String tongTien = tblThongKe.getValueAt(row, 3).toString();
+
+            txtSoLuong.setText(maHD);
+            txtDoanhThu.setText(tongTien);
+        }
+    }//GEN-LAST:event_tblThongKeMouseClicked
     private void loadData(String where) {
         model.setRowCount(0);
 

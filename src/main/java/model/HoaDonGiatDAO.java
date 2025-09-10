@@ -15,17 +15,18 @@ import java.util.List;
  */
 public class HoaDonGiatDAO {
 
-    // Lấy toàn bộ hóa đơn
-    public List<HoaDonGiat> getAll() {
+   public List<HoaDonGiat> getAll() {
         List<HoaDonGiat> list = new ArrayList<>();
-        String sql = "SELECT * FROM HoaDonGiat";
-        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+        String sql = "SELECT MaHoaDon, TenKhachHang, TrangThai, TongTien FROM HoaDonGiat";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 HoaDonGiat hd = new HoaDonGiat(
-                        rs.getInt("maHoaDon"),
-                        rs.getInt("maKhachHang"),
-                        rs.getString("trangThai"),
-                        rs.getDouble("tongTien")
+                        rs.getInt("MaHoaDon"),
+                        rs.getString("TenKhachHang"),
+                        rs.getString("TrangThai"),
+                        rs.getDouble("TongTien")
                 );
                 list.add(hd);
             }
@@ -35,30 +36,25 @@ public class HoaDonGiatDAO {
         return list;
     }
 
-    // Thêm mới hóa đơn
-    public int insert(HoaDonGiat hd) {
-        String sql = "INSERT INTO HoaDonGiat(maKhachHang, trangThai, tongTien) VALUES (?, ?, ?)";
-        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            ps.setInt(1, hd.getMaKhachHang());
+    public boolean insert(HoaDonGiat hd) {
+        String sql = "INSERT INTO HoaDonGiat (TenKhachHang, TrangThai, TongTien) VALUES (?, ?, ?)";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, hd.getTenKhachHang());
             ps.setString(2, hd.getTrangThai());
             ps.setDouble(3, hd.getTongTien());
-            ps.executeUpdate();
-
-            ResultSet rs = ps.getGeneratedKeys();
-            if (rs.next()) {
-                return rs.getInt(1); // trả về id tự tăng
-            }
+            return ps.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return -1;
+        return false;
     }
 
-    // Cập nhật hóa đơn
     public boolean update(HoaDonGiat hd) {
-        String sql = "UPDATE HoaDonGiat SET maKhachHang=?, trangThai=?, tongTien=? WHERE maHoaDon=?";
-        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, hd.getMaKhachHang());
+        String sql = "UPDATE HoaDonGiat SET TenKhachHang=?, TrangThai=?, TongTien=? WHERE MaHoaDon=?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, hd.getTenKhachHang());
             ps.setString(2, hd.getTrangThai());
             ps.setDouble(3, hd.getTongTien());
             ps.setInt(4, hd.getMaHoaDon());
@@ -69,11 +65,11 @@ public class HoaDonGiatDAO {
         return false;
     }
 
-    // Xóa hóa đơn
-    public boolean delete(int id) {
-        String sql = "DELETE FROM HoaDonGiat WHERE maHoaDon=?";
-        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, id);
+    public boolean delete(int maHoaDon) {
+        String sql = "DELETE FROM HoaDonGiat WHERE MaHoaDon=?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, maHoaDon);
             return ps.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();

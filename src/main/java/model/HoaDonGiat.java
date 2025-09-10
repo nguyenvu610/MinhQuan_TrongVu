@@ -12,22 +12,26 @@ import java.sql.Date;
 public class HoaDonGiat {
 
     private int maHoaDon;
-    private int maKhachHang;
+    private String tenKhachHang;
     private String trangThai;
     private double tongTien;
 
-    public HoaDonGiat(int maKH, String trangThai, double tongTien) {
-        this.maKhachHang = maKH;
+    public HoaDonGiat() {
+    }
+
+    public HoaDonGiat(int maHoaDon, String tenKhachHang, String trangThai, double tongTien) {
+        this.maHoaDon = maHoaDon;
+        this.tenKhachHang = tenKhachHang;
         this.trangThai = trangThai;
         this.tongTien = tongTien;
     }
 
-    public HoaDonGiat(int maHD, int maKH, String trangThai, double tongTien) {
-        this(maKH, trangThai, tongTien);
-        this.maHoaDon = maHD;
+    public HoaDonGiat(String tenKhachHang, String trangThai, double tongTien) {
+        this.tenKhachHang = tenKhachHang;
+        this.trangThai = trangThai;
+        this.tongTien = tongTien;
     }
 
-    // Getter & Setter
     public int getMaHoaDon() {
         return maHoaDon;
     }
@@ -36,12 +40,12 @@ public class HoaDonGiat {
         this.maHoaDon = maHoaDon;
     }
 
-    public int getMaKhachHang() {
-        return maKhachHang;
+    public String getTenKhachHang() {
+        return tenKhachHang;
     }
 
-    public void setMaKhachHang(int maKhachHang) {
-        this.maKhachHang = maKhachHang;
+    public void setTenKhachHang(String tenKhachHang) {
+        this.tenKhachHang = tenKhachHang;
     }
 
     public String getTrangThai() {

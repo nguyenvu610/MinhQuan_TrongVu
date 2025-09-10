@@ -32,6 +32,11 @@ public class TimKiemDonHangPanel extends javax.swing.JPanel {
 
         // Load mặc định tất cả đơn
         loadData("");
+        tblTraCuu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblTraCuuMouseClicked(evt);
+            }
+        });
     }
 
     /**
@@ -140,6 +145,11 @@ public class TimKiemDonHangPanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7"
             }
         ));
+        tblTraCuu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblTraCuuMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblTraCuu);
 
         btnTimKiem.setFont(new java.awt.Font("Sitka Heading", 1, 14)); // NOI18N
@@ -280,6 +290,16 @@ public class TimKiemDonHangPanel extends javax.swing.JPanel {
         cboTrangThai.setSelectedIndex(0);
         loadData("");
     }//GEN-LAST:event_btnLamMoiActionPerformed
+
+    private void tblTraCuuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTraCuuMouseClicked
+        int row = tblTraCuu.getSelectedRow();
+        if (row >= 0) {
+            txtHoaDon.setText(tblTraCuu.getValueAt(row, 0).toString());      
+            txtKhanhHang.setText(tblTraCuu.getValueAt(row, 1).toString());   
+            txtSDT.setText(tblTraCuu.getValueAt(row, 2).toString());         
+            cboTrangThai.setSelectedItem(tblTraCuu.getValueAt(row, 3).toString()); 
+        }
+    }//GEN-LAST:event_tblTraCuuMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

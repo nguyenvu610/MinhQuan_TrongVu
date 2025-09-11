@@ -358,6 +358,7 @@ public class QuanLyHoaDonPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnXoaHDActionPerformed
 
+    
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
         lamMoiForm();
     }//GEN-LAST:event_btnLamMoiActionPerformed

@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class QuanLyHoaDonPanel extends javax.swing.JPanel {
 
-     private DefaultTableModel model;
+    private DefaultTableModel model;
     private HoaDonGiatDAO hoaDonDAO = new HoaDonGiatDAO();
 
     /**
@@ -31,21 +31,21 @@ public class QuanLyHoaDonPanel extends javax.swing.JPanel {
 
     private void loadDataToTable() {
         model = new DefaultTableModel(
-                new String[]{"Mã HĐ", "Tên KH", "Trạng Thái", "Tổng Tiền"}, 0);
-
+                new String[]{"Mã HĐ", "Tên KH", "Trạng Thái", "Tổng Tiền"}, 0
+        );
         List<HoaDonGiat> list = hoaDonDAO.getAll();
         for (HoaDonGiat hd : list) {
             model.addRow(new Object[]{
-                    hd.getMaHoaDon(),
-                    hd.getTenKhachHang(),
-                    hd.getTrangThai(),
-                    hd.getTongTien()
+                hd.getMaHoaDon(),
+                hd.getTenKhachHang(),
+                hd.getTrangThai(),
+                hd.getTongTien()
             });
         }
         tblHoaDon.setModel(model);
     }
 
-     private void addTableClickEvent() {
+    private void addTableClickEvent() {
         tblHoaDon.getSelectionModel().addListSelectionListener(e -> {
             int row = tblHoaDon.getSelectedRow();
             if (row >= 0) {
@@ -57,14 +57,14 @@ public class QuanLyHoaDonPanel extends javax.swing.JPanel {
         });
     }
 
-     private void lamMoiForm() {
+    private void lamMoiForm() {
         txtHoaDon.setText("");
         txtKhachHang.setText("");
         txtTongTien.setText("");
         cboTrangThai.setSelectedIndex(0);
         tblHoaDon.clearSelection();
     }
-     
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -293,7 +293,7 @@ public class QuanLyHoaDonPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnThemHDGActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemHDGActionPerformed
-         try {
+        try {
             String tenKH = txtKhachHang.getText().trim();
             String trangThai = cboTrangThai.getSelectedItem().toString();
             double tongTien = Double.parseDouble(txtTongTien.getText().trim());
@@ -312,7 +312,7 @@ public class QuanLyHoaDonPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnThemHDGActionPerformed
 
     private void btnSuaHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaHDActionPerformed
-         int row = tblHoaDon.getSelectedRow();
+        int row = tblHoaDon.getSelectedRow();
         if (row == -1) {
             JOptionPane.showMessageDialog(this, "Chọn hóa đơn để sửa!");
             return;
@@ -345,7 +345,9 @@ public class QuanLyHoaDonPanel extends javax.swing.JPanel {
         int maHD = Integer.parseInt(model.getValueAt(row, 0).toString());
         int confirm = JOptionPane.showConfirmDialog(this,
                 "Xóa hóa đơn này?", "Xác nhận", JOptionPane.YES_NO_OPTION);
-        if (confirm != JOptionPane.YES_OPTION) return;
+        if (confirm != JOptionPane.YES_OPTION) {
+            return;
+        }
 
         if (hoaDonDAO.delete(maHD)) {
             JOptionPane.showMessageDialog(this, "Xóa thành công!");
@@ -357,31 +359,7 @@ public class QuanLyHoaDonPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnXoaHDActionPerformed
 
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
-        int row = tblHoaDon.getSelectedRow();
-        if (row < 0) {
-            JOptionPane.showMessageDialog(this, "Chọn hóa đơn cần in!");
-            return;
-        }
-
-        try {
-            String maHD = tblHoaDon.getValueAt(row, 0).toString();
-            String maKH = tblHoaDon.getValueAt(row, 1).toString();
-            String trangThai = tblHoaDon.getValueAt(row, 2).toString();
-            String tongTien = tblHoaDon.getValueAt(row, 3).toString();
-
-            StringBuilder invoice = new StringBuilder();
-            invoice.append("====== HÓA ĐƠN GIẶT ỦI ======\n");
-            invoice.append("Mã HĐ: ").append(maHD).append("\n");
-            invoice.append("Mã KH: ").append(maKH).append("\n");
-            invoice.append("Trạng Thái: ").append(trangThai).append("\n");
-            invoice.append("Tổng Tiền: ").append(tongTien).append(" VND\n");
-            invoice.append("=============================\n");
-            invoice.append("Xin cảm ơn quý khách!");
-
-            JOptionPane.showMessageDialog(this, invoice.toString(), "In Hóa Đơn", JOptionPane.INFORMATION_MESSAGE);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Lỗi khi in hóa đơn: " + e.getMessage());
-        }
+        lamMoiForm();
     }//GEN-LAST:event_btnLamMoiActionPerformed
 
     private void tblHoaDonFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tblHoaDonFocusGained
@@ -393,7 +371,30 @@ public class QuanLyHoaDonPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_tblHoaDonMouseClicked
 
     private void btnHoaDonHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHoaDonHDActionPerformed
-        // TODO add your handling code here:
+        int row = tblHoaDon.getSelectedRow();
+        if (row < 0) {
+            JOptionPane.showMessageDialog(this, "Chọn hóa đơn cần in!");
+            return;
+        }
+        try {
+            String maHD = tblHoaDon.getValueAt(row, 0).toString();
+            String tenKH = tblHoaDon.getValueAt(row, 1).toString();
+            String trangThai = tblHoaDon.getValueAt(row, 2).toString();
+            String tongTien = tblHoaDon.getValueAt(row, 3).toString();
+
+            StringBuilder invoice = new StringBuilder();
+            invoice.append("====== HÓA ĐƠN GIẶT ỦI ======\n");
+            invoice.append("Mã HĐ: ").append(maHD).append("\n");
+            invoice.append("Khách Hàng: ").append(tenKH).append("\n");
+            invoice.append("Trạng Thái: ").append(trangThai).append("\n");
+            invoice.append("Tổng Tiền: ").append(tongTien).append(" VND\n");
+            invoice.append("=============================\n");
+            invoice.append("Xin cảm ơn quý khách!");
+
+            JOptionPane.showMessageDialog(this, invoice.toString(), "In Hóa Đơn", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi khi in hóa đơn: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnHoaDonHDActionPerformed
 
 
